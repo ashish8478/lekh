@@ -1,0 +1,8 @@
+<div class="NgxEditor__Wrapper">
+    <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
+    <ngx-editor [editor]="editor" [(ngModel)]="html" editable="true" placeholder="Type here..."
+        (ngModelChange)="onChange($event)"></ngx-editor>
+</div>
+<div>
+    <p>{{ jsonDoc }}</p>
+</div>
