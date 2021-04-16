@@ -27,6 +27,9 @@ export class EditorComponent implements OnInit {
 
   editor: Editor | undefined;
   html: any | undefined;
+  outputJson: any;
+  outputHtml: any;
+  activeTab = 'myform';
 
   form: FormGroup | undefined;
 
@@ -48,7 +51,7 @@ export class EditorComponent implements OnInit {
 
     this.form = this.fb.group({
       title: new FormControl('', [Validators.required(), Validators.minLength(4)]),
-      author: new FormControl('प. पू. डॉ. काका', [Validators.required(), Validators.minLength(4)]),
+      author: new FormControl('प. पू. डॉ. श्री. द. देशमुख', [Validators.required(), Validators.minLength(4)]),
       source: new FormControl(''),
       publisher: new FormControl(''),
       date: new FormControl(''),
@@ -75,6 +78,8 @@ export class EditorComponent implements OnInit {
   // }
   
   saveLekh() {
+    this.activeTab = 'home';
+   
     const content = this.form?.get('editorContent')?.value;
     const input = toHTML(content);
     this.html = input;
@@ -88,6 +93,41 @@ export class EditorComponent implements OnInit {
     this.output.keywords = this.form?.get('keywords')?.value;
     this.output.editorContent = JSON.stringify(content);
 
-    this.html = JSON.stringify(this.output);
+    this.outputJson =  JSON.stringify(this.output);
+
+    this.outputHtml = input;
+
+    //this.html = JSON.stringify(this.output);
+  }
+
+  onChangeEvent($event: any) {
+    this.outputHtml = $event.target.value;
+    // this.outputJson = JSON.stringify(toDoc(this.outputHtml));
+    this.outputJson = JSON.stringify(JSON.stringify(toDoc(this.outputHtml)));
+  }
+
+  copyJsonOutput(inputElement: any) {
+    let text: string = inputElement.innerHTML;
+    text = text.trim();
+    if (text.startsWith("\"") && text.endsWith("\"")) {
+      text = text.slice(1, text.length - 1);
+    }
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = text;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+  }
+
+  copyHtmlEdits(inputElement: any) {
+    inputElement.select();
+    document.execCommand('copy');
+    inputElement.setSelectionRange(0, 0);
   }
 }

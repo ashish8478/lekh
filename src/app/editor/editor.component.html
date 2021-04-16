@@ -1,122 +1,152 @@
+<br>
 <div class="container">
-
-    <!-- <div class="NgxEditor__Wrapper">
-    <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
-    <ngx-editor [editor]="editor" [(ngModel)]="jsonDoc" editable="true" placeholder="Type here..."
-        (ngModelChange)="onChange($event)"></ngx-editor>
-    </div> -->
-
-    <!-- <div class="NgxEditor__Wrapper"> -->
-    <br>
-
-    <div class="row">
-        <div class="col-md-12">
-            <form [formGroup]="form">
-                <!-- <h4 style="margin-bottom: 4px">Lekh Details: </h4> -->
-                <br>
-                <div class="form-row">
-                    <div class="col-md-11" style="margin-bottom: 2px">
-                        <input type="text" class="form-control" id="title" formControlName="title"
-                            placeholder="शीर्षक (Title):" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-11" style="margin-bottom: 2px">
-                        <input type="text" class="form-control" id="author" formControlName="author"
-                            placeholder="लेखक (Author):" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-11" style="margin-bottom: 2px">
-                        <input type="text" class="form-control" id="source" formControlName="source"
-                            placeholder="मासिक / ग्रंथ (Magazine / Book):">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-11" style="margin-bottom: 2px">
-                        <input type="text" class="form-control" id="publisher" formControlName="publisher"
-                            placeholder="प्रकाशक (Publisher):">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-11" style="margin-bottom: 2px">
-                        <input type="text" class="form-control" id="date" formControlName="date"
-                            placeholder="प्रकाशन दिनांक (Published Date):">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-11" style="margin-bottom: 2px">
-                        <textarea type="text" class="form-control" id="description" formControlName="description"
-                            placeholder="माहिती (Description):"></textarea>
-                    </div>
-                </div>
-                <!-- <div class="form-row"> -->
-                    <div class="col-md-11" style="margin-bottom: 2px">
-                        <br>
-                        <!-- <h6 style="margin-bottom: 4px">लेख येथे लिहा:</h6> -->
-                        <div class="editor">
-                            <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
-                            </ngx-editor-menu>
-                            <ngx-editor [editor]="editor" id="editorContent" formControlName="editorContent"
-                                style="height: 200px;" placeholder="लेख येथे लिहा (Type lekh here)...">
-                            </ngx-editor>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" role="tab" data-toggle="tab" href="#myform" [ngClass]="{ 'active':activeTab==='myform'}" >Lekh Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" role="tab" data-toggle="tab" href="#home" [ngClass]="{ 'active':activeTab==='home'}" >JSON Output</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" role="tab" data-toggle="tab" href="#menu1" [ngClass]="{ 'active':activeTab==='menu1'}" >HTML Output Editable</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" role="tab" data-toggle="tab" href="#menu2" [ngClass]="{ 'active':activeTab==='menu2'}" >HTML Output Rendered</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div id="myform" class="tab-pane fade show active" role="tabpanel" [ngClass]="{ 'active':activeTab==='myform'}"><br>
+            <div class="row">
+                <div class="col-md-12">
+                    <form [formGroup]="form">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3>Lekh Details</h3>
+                            </div>
+                            <div class="col-md-8 text-right">
+                                <button type="submit" (click)="saveLekh()" class="btn btn-primary" data-toggle="tooltip"
+                                    data-placement="top" title="Save to database">Compile Data</button>
+                            </div>
                         </div>
-                    </div>
+                        <!-- <h4 style="margin-bottom: 4px">Lekh Details: </h4> -->
+                        <div class="form-row">
+                            <div class="col-md-12" style="margin-bottom: 2px">
+                                <input type="text" class="form-control" id="title" formControlName="title"
+                                    placeholder="शीर्षक (Title):" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12" style="margin-bottom: 2px">
+                                <input type="text" class="form-control" id="author" formControlName="author"
+                                    placeholder="लेखक (Author):" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12" style="margin-bottom: 2px">
+                                <input type="text" class="form-control" id="source" formControlName="source"
+                                    placeholder="मासिक / ग्रंथ (Magazine / Book):">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12" style="margin-bottom: 2px">
+                                <input type="text" class="form-control" id="publisher" formControlName="publisher"
+                                    placeholder="प्रकाशक (Publisher):">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12" style="margin-bottom: 2px">
+                                <input type="text" class="form-control" id="date" formControlName="date"
+                                    placeholder="प्रकाशन दिनांक (Published Date):">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12" style="margin-bottom: 2px">
+                                <textarea type="text" class="form-control" id="description"
+                                    formControlName="description" placeholder="माहिती (Description):"></textarea>
+                            </div>
+                        </div>
+                        <!-- <div class="form-row"> -->
+                        <div class="col-md-12" style="margin-bottom: 2px">
+                            <br>
+                            <!-- <h6 style="margin-bottom: 4px">लेख येथे लिहा:</h6> -->
+                            <div style="margin-left: -15px; ">
+                                <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+                                </ngx-editor-menu>
+                            </div>
+                            <div class="overflow-auto" style="height: 350px; margin-left: -15px; ">
+                               <div class="editor">
+                                    <ngx-editor [editor]="editor" id="editorContent" formControlName="editorContent"
+                                        placeholder="लेख येथे लिहा (Type lekh here)...">
+                                    </ngx-editor>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-row">
+                            <div class="col-md-12" style="margin-bottom: 2px">
+                                <input type="text" class="form-control" id="keywords" formControlName="keywords"
+                                    placeholder="सूचक शब्द (Keywords - Comma Separated):">
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                        <!-- <div class="form-row">
+                            <div class="col-md-12" style="margin-bottom: 2px">
+                                <br>
+                                
+                            </div>
+                        </div> -->
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div id="home" class="tab-pane fade show" role="tabpanel" [ngClass]="{ 'active':activeTab==='home'}"><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>JSON Output</h3>
+                </div>
+                <div class="col-md-8 text-right">
+                    <button type="submit" (click)="copyJsonOutput(jsonOutput)" class="btn btn-success" data-toggle="tooltip"
+                        data-placement="top" title="Select Json Output">Copy JSON Output</button>
+                </div>
+            </div>
+            <br>
+            <div class="overflow-auto" style="height: 750px;">
+                <div #jsonOutput>
+                    {{ outputJson }}
+                </div>
+            </div>
+        </div>
+        <div id="menu1" class="tab-pane fade" role="tabpanel" [ngClass]="{ 'active':activeTab==='menu1'}"><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>HTML Output Editable</h3>
+                </div>
+                <div class="col-md-8 text-right">
+                    <button type="submit" (click)="copyHtmlEdits(htmlOutputEditable)" class="btn btn-success" data-toggle="tooltip"
+                        data-placement="top" title="Select HTML Output">Copy HTML Edits</button>
+                </div>
+            </div>
+            <!-- <textarea type="text" id="htmlOutputEditable" placeholder="माहिती (Description):">{{ html }}</textarea> -->
+            <div class="form-row">
+                <div class="col-md-12" style="margin-bottom: 2px">
+                    <textarea type="text" class="form-control" style="height: 800px;" #htmlOutputEditable
+                        (change)="onChangeEvent($event)" placeholder="माहिती (Description):">{{ html }}</textarea>
+                </div>
+            </div>
+            <!-- <div class="form-row">
+                <div class="col-md-12" style="margin-bottom: 2px">
                     <br>
-                    <div class="form-row">
-                        <div class="col-md-11" style="margin-bottom: 2px">
-                            <input type="text" class="form-control" id="keywords" formControlName="keywords"
-                                placeholder="सूचक शब्द (Keywords - Comma Separated):">
-                        </div>
-                    </div>
-                    <!-- </div> -->
-                <div class="form-row">
-                    <div class="col-md-11" style="margin-bottom: 2px">
-                        <br>
-                        <button type="submit" (click)="saveLekh()" class="btn btn-primary" data-toggle="tooltip"
-                            data-placement="top" title="Save to database">Save to database</button>
-                    </div>
+                    <button type="submit" class="btn btn-primary" data-toggle="tooltip" 
+                        data-placement="top" title="Save to database">Test HTML Changes</button>
                 </div>
-                <!-- <div class="row">
-            <div class="col-md-2">
-                <h4 class="text-info">Title :</h4>
-            </div>
-            <div class="col-md-10">
-
-            </div>
-        <div class="row">
-            <div class="col">
-                <div>
-                    <h5 class="text-info">Lekh :</h5>
-                </div>
-                <div class="editor">
-                    <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
-                    </ngx-editor-menu>
-                    <ngx-editor [editor]="editor" id="editorContent" formControlName="editorContent"
-                        (ngModelChange)="onChange($event)">
-                    </ngx-editor>
-                </div>
+            </div>         -->
+        </div>
+        <div id="menu2" class="tab-pane fade" role="tabpanel" [ngClass]="{ 'active':activeTab==='menu2'}"><br>
+            <h3>HTML Output Rendered</h3>
+            <div class="overflow-auto" style="height: 750px; padding: 10px;">
+                <div class="dynamic-lekh" [innerHTML]="outputHtml | safehtml"></div>
             </div>
         </div>
-        <br>
-        <div class="row">
-            <div class="col">
-                <button type="submit" (click)="saveLekh()" class="btn btn-primary" data-toggle="tooltip"
-                    data-placement="top" title="Save to database">Save to database</button>
-            </div>
-        </div> -->
-            </form>
-        </div>
     </div>
-    <!-- </div> -->
-
-    <br>
-    <div>
-        <h3 class="text-info">Output</h3>
-    </div>
-
-    <div [innerHTML]="html | safehtml">
-    </div>
-
-
 </div>
