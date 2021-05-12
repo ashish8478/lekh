@@ -65,9 +65,14 @@
                                     formControlName="description" placeholder="माहिती (Description):"></textarea>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="col-md-12" style="margin-bottom: 2px">
+                                <input type="text" class="form-control" id="keywords" formControlName="keywords"
+                                    placeholder="सूचक शब्द (Keywords - Comma Separated):">
+                            </div>
+                        </div>
                         <!-- <div class="form-row"> -->
                         <div class="col-md-12" style="margin-bottom: 2px">
-                            <br>
                             <!-- <h6 style="margin-bottom: 4px">लेख येथे लिहा:</h6> -->
                             <div style="margin-left: -15px; ">
                                 <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
@@ -81,24 +86,9 @@
                                 </div>
                             </div>
                         </div>
-                        <br>
-                        <div class="form-row">
-                            <div class="col-md-12" style="margin-bottom: 2px">
-                                <input type="text" class="form-control" id="keywords" formControlName="keywords"
-                                    placeholder="सूचक शब्द (Keywords - Comma Separated):">
-                            </div>
-                        </div>
-                        <!-- </div> -->
-                        <!-- <div class="form-row">
-                            <div class="col-md-12" style="margin-bottom: 2px">
-                                <br>
-                                
-                            </div>
-                        </div> -->
                     </form>
                 </div>
             </div>
-
         </div>
         <div id="home" class="tab-pane fade show" role="tabpanel" [ngClass]="{ 'active':activeTab==='home'}"><br>
             <div class="row">
@@ -124,14 +114,14 @@
                 </div>
                 <div class="col-md-8 text-right">
                     <button type="submit" (click)="copyHtmlEdits(htmlOutputEditable)" class="btn btn-success" data-toggle="tooltip"
-                        data-placement="top" title="Select HTML Output">Copy HTML Edits</button>
+                        data-placement="top" title="Select HTML Output">Sync HTML Edits</button>
                 </div>
             </div>
             <!-- <textarea type="text" id="htmlOutputEditable" placeholder="माहिती (Description):">{{ html }}</textarea> -->
             <div class="form-row">
                 <div class="col-md-12" style="margin-bottom: 2px">
                     <textarea type="text" class="form-control" style="height: 800px;" #htmlOutputEditable
-                        (change)="onChangeEvent($event)" placeholder="माहिती (Description):">{{ html }}</textarea>
+                        (change)="onChangeEvent($event)" placeholder="माहिती (Description):" [(ngModel)]="html"></textarea>
                 </div>
             </div>
             <!-- <div class="form-row">

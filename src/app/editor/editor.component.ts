@@ -21,7 +21,7 @@ export class EditorComponent implements OnInit {
     publisher: "",
     date: "",
     description: "",
-    keywords: "",
+    keywords: [""],
     editorContent: ""
   };
 
@@ -51,7 +51,7 @@ export class EditorComponent implements OnInit {
 
     this.form = this.fb.group({
       title: new FormControl('', [Validators.required(), Validators.minLength(4)]),
-      author: new FormControl('प. पू. डॉ. श्री. द. देशमुख', [Validators.required(), Validators.minLength(4)]),
+      author: new FormControl('डॉ. श्री. द. देशमुख', [Validators.required(), Validators.minLength(4)]),
       source: new FormControl(''),
       publisher: new FormControl(''),
       date: new FormControl(''),
@@ -90,20 +90,23 @@ export class EditorComponent implements OnInit {
     this.output.publisher = this.form?.get('publisher')?.value;
     this.output.date = this.form?.get('date')?.value;
     this.output.description = this.form?.get('description')?.value;
-    this.output.keywords = this.form?.get('keywords')?.value;
-    this.output.editorContent = JSON.stringify(content);
+    this.output.keywords = this.form?.get('keywords')?.value?.toString().split(",").map((k: string) => k.trim());
+
+    this.output.editorContent = this.html;
 
     this.outputJson =  JSON.stringify(this.output);
 
     this.outputHtml = input;
-
-    //this.html = JSON.stringify(this.output);
   }
 
   onChangeEvent($event: any) {
     this.outputHtml = $event.target.value;
     // this.outputJson = JSON.stringify(toDoc(this.outputHtml));
-    this.outputJson = JSON.stringify(JSON.stringify(toDoc(this.outputHtml)));
+
+    this.output.editorContent = this.html;
+
+    this.outputJson = JSON.stringify(this.output);
+    // this.outputJson = JSON.stringify(JSON.stringify(toDoc(this.outputHtml)));
   }
 
   copyJsonOutput(inputElement: any) {
@@ -129,5 +132,9 @@ export class EditorComponent implements OnInit {
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
+
+    this.output.editorContent = this.html;
+
+    this.outputJson =  JSON.stringify(this.output);
   }
 }
