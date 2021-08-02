@@ -18,10 +18,11 @@ export class EditorComponent implements OnInit {
     title: "",
     author: "",
     source: "",
+    grantha: "",
     publisher: "",
     date: "",
     description: "",
-    keywords: "",
+    keywords: [""],
     editorContent: ""
   };
 
@@ -51,9 +52,9 @@ export class EditorComponent implements OnInit {
 
     this.form = this.fb.group({
       title: new FormControl('', [Validators.required(), Validators.minLength(4)]),
-      author: new FormControl('प. पू. डॉ. श्री. द. देशमुख', [Validators.required(), Validators.minLength(4)]),
+      author: new FormControl('डॉ. श्री. द. देशमुख', [Validators.required(), Validators.minLength(4)]),
       source: new FormControl(''),
-      publisher: new FormControl(''),
+      grantha: new FormControl(''),
       date: new FormControl(''),
       description: new FormControl(''),
       keywords: new FormControl(''),
@@ -78,7 +79,8 @@ export class EditorComponent implements OnInit {
   // }
   
   saveLekh() {
-    this.activeTab = 'home';
+    
+    this.switchTab('home');
    
     const content = this.form?.get('editorContent')?.value;
     const input = toHTML(content);
@@ -87,10 +89,14 @@ export class EditorComponent implements OnInit {
     this.output.title = this.form?.get('title')?.value;
     this.output.author = this.form?.get('author')?.value;
     this.output.source = this.form?.get('source')?.value;
-    this.output.publisher = this.form?.get('publisher')?.value;
+    this.output.grantha = this.form?.get('grantha')?.value;
     this.output.date = this.form?.get('date')?.value;
     this.output.description = this.form?.get('description')?.value;
-    this.output.keywords = this.form?.get('keywords')?.value;
+    const keywords: string = this.form?.get('keywords')?.value;
+    if (keywords) {
+      this.output.keywords = keywords.split(",").map(s => s.trim());
+    }
+
     this.output.editorContent = JSON.stringify(content);
 
     this.outputJson =  JSON.stringify(this.output);
@@ -129,5 +135,10 @@ export class EditorComponent implements OnInit {
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
+  }
+
+  switchTab(tab: string) {
+    this.activeTab = tab;
+    console.log("Current Tab: " + tab);
   }
 }
