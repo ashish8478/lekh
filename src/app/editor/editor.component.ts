@@ -19,6 +19,10 @@ export class EditorComponent implements OnInit {
     author: "",
     source: "",
     publisher: "",
+    grantha: "",
+    category: "",
+    previousLekhInSeries: "",
+    nextLekhInSeries: "",
     date: "",
     description: "",
     keywords: [""],
@@ -53,7 +57,7 @@ export class EditorComponent implements OnInit {
       title: new FormControl('', [Validators.required(), Validators.minLength(4)]),
       author: new FormControl('डॉ. श्री. द. देशमुख', [Validators.required(), Validators.minLength(4)]),
       source: new FormControl(''),
-      publisher: new FormControl(''),
+      grantha: new FormControl(''),
       date: new FormControl(''),
       description: new FormControl(''),
       keywords: new FormControl(''),
@@ -87,7 +91,8 @@ export class EditorComponent implements OnInit {
     this.output.title = this.form?.get('title')?.value;
     this.output.author = this.form?.get('author')?.value;
     this.output.source = this.form?.get('source')?.value;
-    this.output.publisher = this.form?.get('publisher')?.value;
+    this.output.publisher = "";
+    this.output.grantha = this.form?.get('grantha')?.value;
     this.output.date = this.form?.get('date')?.value;
     this.output.description = this.form?.get('description')?.value;
     this.output.keywords = this.form?.get('keywords')?.value?.toString().split(",").map((k: string) => k.trim());
