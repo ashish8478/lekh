@@ -18,8 +18,8 @@ export class EditorComponent implements OnInit {
     title: "",
     author: "",
     source: "",
-    publisher: "",
     grantha: "",
+    publisher: "",
     category: "",
     previousLekhInSeries: "",
     nextLekhInSeries: "",
@@ -82,7 +82,8 @@ export class EditorComponent implements OnInit {
   // }
   
   saveLekh() {
-    this.activeTab = 'home';
+    
+    this.switchTab('home');
    
     const content = this.form?.get('editorContent')?.value;
     const input = toHTML(content);
@@ -141,5 +142,10 @@ export class EditorComponent implements OnInit {
     this.output.editorContent = this.html;
 
     this.outputJson =  JSON.stringify(this.output);
+  }
+
+  switchTab(tab: string) {
+    this.activeTab = tab;
+    console.log("Current Tab: " + tab);
   }
 }

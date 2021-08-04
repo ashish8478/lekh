@@ -2,20 +2,25 @@
 <div class="container">
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" role="tab" data-toggle="tab" href="#myform" [ngClass]="{ 'active':activeTab==='myform'}" >Lekh Details</a>
+            <a class="nav-link active" role="tab" data-toggle="tab" href="#myform"
+                [ngClass]="{ 'active':activeTab==='myform'}">Lekh Details</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" role="tab" data-toggle="tab" href="#home" [ngClass]="{ 'active':activeTab==='home'}" >JSON Output</a>
+            <a class="nav-link" role="tab" data-toggle="tab" href="#home"
+                [ngClass]="{ 'active':activeTab==='home'}">JSON Output</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" role="tab" data-toggle="tab" href="#menu1" [ngClass]="{ 'active':activeTab==='menu1'}" >HTML Output Editable</a>
+            <a class="nav-link" role="tab" data-toggle="tab" href="#menu1"
+                [ngClass]="{ 'active':activeTab==='menu1'}">HTML Output Editable</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" role="tab" data-toggle="tab" href="#menu2" [ngClass]="{ 'active':activeTab==='menu2'}" >HTML Output Rendered</a>
+            <a class="nav-link" role="tab" data-toggle="tab" href="#menu2"
+                [ngClass]="{ 'active':activeTab==='menu2'}">HTML Output Rendered</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div id="myform" class="tab-pane fade show active" role="tabpanel" [ngClass]="{ 'active':activeTab==='myform'}"><br>
+        <div id="myform" class="tab-pane fade show active" role="tabpanel" [ngClass]="{ 'active':activeTab==='myform'}">
+            <br>
             <div class="row">
                 <div class="col-md-12">
                     <form [formGroup]="form">
@@ -28,7 +33,6 @@
                                     data-placement="top" title="Save to database">Compile Data</button>
                             </div>
                         </div>
-                        <!-- <h4 style="margin-bottom: 4px">Lekh Details: </h4> -->
                         <div class="form-row">
                             <div class="col-md-12" style="margin-bottom: 2px">
                                 <input type="text" class="form-control" id="title" formControlName="title"
@@ -55,8 +59,8 @@
                         </div>
                         <div class="form-row">
                             <div class="col-md-12" style="margin-bottom: 2px">
-                                <input type="text" class="form-control" id="date" formControlName="date"
-                                    placeholder="प्रकाशन दिनांक (Published Date):">
+                                <input type="text" class="form-control" id="grantha" formControlName="grantha"
+                                    placeholder="ग्रंथ (Book):">
                             </div>
                         </div>
                         <div class="form-row">
@@ -79,7 +83,7 @@
                                 </ngx-editor-menu>
                             </div>
                             <div class="overflow-auto" style="height: 350px; margin-left: -15px; ">
-                               <div class="editor">
+                                <div class="editor">
                                     <ngx-editor [editor]="editor" id="editorContent" formControlName="editorContent"
                                         placeholder="लेख येथे लिहा (Type lekh here)...">
                                     </ngx-editor>
@@ -96,8 +100,8 @@
                     <h3>JSON Output</h3>
                 </div>
                 <div class="col-md-8 text-right">
-                    <button type="submit" (click)="copyJsonOutput(jsonOutput)" class="btn btn-success" data-toggle="tooltip"
-                        data-placement="top" title="Select Json Output">Copy JSON Output</button>
+                    <button type="submit" (click)="copyJsonOutput(jsonOutput)" class="btn btn-success"
+                        data-toggle="tooltip" data-placement="top" title="Select Json Output">Copy JSON Output</button>
                 </div>
             </div>
             <br>
@@ -117,20 +121,12 @@
                         data-placement="top" title="Select HTML Output">Sync HTML Edits</button>
                 </div>
             </div>
-            <!-- <textarea type="text" id="htmlOutputEditable" placeholder="माहिती (Description):">{{ html }}</textarea> -->
             <div class="form-row">
                 <div class="col-md-12" style="margin-bottom: 2px">
                     <textarea type="text" class="form-control" style="height: 800px;" #htmlOutputEditable
                         (change)="onChangeEvent($event)" placeholder="माहिती (Description):" [(ngModel)]="html"></textarea>
                 </div>
             </div>
-            <!-- <div class="form-row">
-                <div class="col-md-12" style="margin-bottom: 2px">
-                    <br>
-                    <button type="submit" class="btn btn-primary" data-toggle="tooltip" 
-                        data-placement="top" title="Save to database">Test HTML Changes</button>
-                </div>
-            </div>         -->
         </div>
         <div id="menu2" class="tab-pane fade" role="tabpanel" [ngClass]="{ 'active':activeTab==='menu2'}"><br>
             <h3>HTML Output Rendered</h3>
