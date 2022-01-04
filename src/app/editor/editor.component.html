@@ -100,8 +100,8 @@
                     <h3>JSON Output</h3>
                 </div>
                 <div class="col-md-8 text-right">
-                    <button type="submit" (click)="copyJsonOutput(jsonOutput)" class="btn btn-success"
-                        data-toggle="tooltip" data-placement="top" title="Select Json Output">Copy JSON Output</button>
+                    <button type="submit" (click)="copyJsonOutput()" class="btn btn-success" data-toggle="tooltip"
+                        data-placement="top" title="Select Json Output">Copy JSON Output</button>
                 </div>
             </div>
             <br>
@@ -117,14 +117,17 @@
                     <h3>HTML Output Editable</h3>
                 </div>
                 <div class="col-md-8 text-right">
-                    <button type="submit" (click)="copyHtmlEdits(htmlOutputEditable)" class="btn btn-success" data-toggle="tooltip"
-                        data-placement="top" title="Select HTML Output">Sync HTML Edits</button>
+                    <button type="submit" (click)="copyHtmlOnly()" style="margin-left: 5px;" class="btn btn-primary"
+                        data-toggle="tooltip" data-placement="top" title="Copy HTML">Copy HTML</button>
+                    <button type="submit" (click)="copyHtmlEdits()" style="margin-left: 5px;" class="btn btn-success"
+                        data-toggle="tooltip" data-placement="top" title="Copy JSON">Copy JSON</button>
                 </div>
             </div>
             <div class="form-row">
                 <div class="col-md-12" style="margin-bottom: 2px">
                     <textarea type="text" class="form-control" style="height: 800px;" #htmlOutputEditable
-                        (change)="onChangeEvent($event)" placeholder="माहिती (Description):" [(ngModel)]="html"></textarea>
+                        (change)="onChangeEvent($event)" placeholder="माहिती (Description):"
+                        [(ngModel)]="html"></textarea>
                 </div>
             </div>
         </div>

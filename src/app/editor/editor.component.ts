@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { Validators, Editor, Toolbar, toDoc, toHTML } from 'ngx-editor';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 
@@ -47,7 +48,7 @@ export class EditorComponent implements OnInit {
     ["align_left", "align_center", "align_right", "align_justify"]
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private clipboard: Clipboard) { }
 
   ngOnInit(): void {
     // this.jsonDoc = JSON.parse(lekh.lekh);
@@ -80,14 +81,20 @@ export class EditorComponent implements OnInit {
   //   this.html = input;
   //   console.log(JSON.stringify(JSON.stringify(this.jsonDoc)));
   // }
-  
+
   saveLekh() {
-    
+
     this.switchTab('home');
-   
+
     const content = this.form?.get('editorContent')?.value;
     const input = toHTML(content);
-    this.html = input;
+    let text = input;
+    text = text.split(/\r?\n|\r/g).join('');
+    text = text.split("&nbsp;").join('');
+    text = text.split(' style="text-align:justify"').join('');
+    text = text.split('<p><strong>').join('<p class="ovi"><strong>');
+
+    this.html = text;
 
     this.output.title = this.form?.get('title')?.value;
     this.output.author = this.form?.get('author')?.value;
@@ -100,48 +107,66 @@ export class EditorComponent implements OnInit {
 
     this.output.editorContent = this.html;
 
-    this.outputJson =  JSON.stringify(this.output);
+    this.outputJson = JSON.stringify(this.output);
 
     this.outputHtml = input;
   }
 
   onChangeEvent($event: any) {
     this.outputHtml = $event.target.value;
-    // this.outputJson = JSON.stringify(toDoc(this.outputHtml));
 
     this.output.editorContent = this.html;
 
     this.outputJson = JSON.stringify(this.output);
-    // this.outputJson = JSON.stringify(JSON.stringify(toDoc(this.outputHtml)));
   }
 
-  copyJsonOutput(inputElement: any) {
-    let text: string = inputElement.innerHTML;
+  copyJsonOutput() {
+    debugger
+    let text: string = this.outputJson;
     text = text.trim();
-    if (text.startsWith("\"") && text.endsWith("\"")) {
-      text = text.slice(1, text.length - 1);
-    }
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = text;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
+    text = text.slice(1, text.length - 1);
+    text = ", " + text;
+
+    this.copy(text);
   }
 
-  copyHtmlEdits(inputElement: any) {
-    inputElement.select();
-    document.execCommand('copy');
-    inputElement.setSelectionRange(0, 0);
+  copy(text: any) {
+    const pending = this.clipboard.beginCopy(text);
+    let remainingAttempts = 3;
+    const attempt = () => {
+      const result = pending.copy();
+      if (!result && --remainingAttempts) {
+        setTimeout(attempt);
+      } else {
+        // Remember to destroy when you're done!
+        pending.destroy();
+      }
+    };
 
-    this.output.editorContent = this.html;
+    attempt();
+  }
 
-    this.outputJson =  JSON.stringify(this.output);
+  copyHtmlOnly() {
+    debugger
+    let text = this.html;
+    text = text.split(/\r?\n|\r/g).join('');
+    text = text.split("&nbsp;").join('');
+    text = text.split(' style="text-align:justify"').join('');
+
+    this.copy(text);
+  }
+
+  copyHtmlEdits() {
+    let text = this.html;
+    text = text.split(/\r?\n|\r/g).join('');
+    text = text.split("&nbsp;").join('');
+    text = text.split(' style="text-align:justify"').join('');
+
+    this.output.editorContent = text;
+
+    this.outputJson = JSON.stringify(this.output);
+
+    this.copyJsonOutput();
   }
 
   switchTab(tab: string) {
